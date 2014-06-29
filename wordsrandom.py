@@ -21,10 +21,18 @@ def randomwords(lists):
 
 fileobj = open('source.txt', 'r')
 filedes = open('destine.txt', 'w+')
+flag = 0
 for linestr in fileobj:
     #print linestr
-    wordslist = linestr.split(' ')
-    randomwords(wordslist)
+    flag = 0
+    for ch in linestr.decode('utf-8'):
+        if u'\u4e00' <= ch <= u'\u9fff': #if Chinese
+            flag = 1;
+    if flag == 1:
+        filedes.write(linestr)
+    else:
+        wordslist = linestr.split(' ')
+        randomwords(wordslist)
 
 fileobj.close()
 filedes.close()
